@@ -1,0 +1,38 @@
+# Local runtime and build output
+*.exe
+*.dll
+*.syso
+*.test
+*.out
+/dist/
+/build/
+
+# Local history, diagnostics, and wallpaper media
+/.local/
+/audit-evidence/
+/AUDIT.md
+/FIXES.md
+*.mlw
+*.mp4
+*.mkv
+*.webm
+*.mov
+*.zip
+
+# Python and editor caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.idea/
+.vscode/
+Thumbs.db
+Desktop.ini
+
+# Local secrets/settings
+.env
+.env.*
+!.env.example
+settings.json
+*.pem
+*.key

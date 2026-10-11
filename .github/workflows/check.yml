@@ -1,0 +1,53 @@
+name: Windows checks
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: gui/go.mod
+          cache-dependency-path: gui/go.sum
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: mingw-w64-x86_64-gcc
+      - name: Test, vet, and build
+        shell: pwsh
+        working-directory: gui
+        run: |
+          $env:PATH = 'C:\msys64\mingw64\bin;' + $env:PATH
+          $env:CGO_ENABLED = '1'
+          go test -race -tags ci ./...
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          go test ./...
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          go vet ./...
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          go mod verify
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cmd /c build.bat
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          go run golang.org/x/vuln/cmd/govulncheck@v1.9.0 ./...
+          exit $LASTEXITCODE
+      - name: Upload Windows executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: drift-windows-x64
+          path: gui/drift.exe
+          if-no-files-found: error
+  python:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r requirements.txt
+      - run: python -m unittest -v test_extractor.py
