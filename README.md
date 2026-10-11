@@ -8,7 +8,9 @@ Live wallpapers, at your pace. Drift plays silent desktop video wallpapers, rota
 
 ## Run
 
-Build Drift using the instructions below, then launch `gui/drift.exe`. Successful GitHub Actions runs also provide a `drift-windows-x64` executable artifact. Install [mpv for Windows](https://mpv.io/installation/) and keep `mpv.exe` beside Drift, or make it available on PATH. mpv and wallpaper videos are not included in this repository. Import or drop an MLW/MP4 file to begin. Converted MP4s are saved beside their source; existing outputs receive a numbered sibling instead of being overwritten.
+Download the **[Windows x64 portable build](https://github.com/hashir-one/drift/releases/latest)**, extract the ZIP, and launch `drift.exe`. No Go installation or compiler is needed. Install [mpv for Windows](https://mpv.io/installation/) and keep `mpv.exe` beside Drift, or make it available on PATH. mpv and wallpaper videos are not included in the download. The ZIP includes setup instructions and dependency notices; release assets also include SHA-256 checksums.
+
+Import or drop an MLW/MP4 file to begin. Converted MP4s are saved beside their source; existing outputs receive a numbered sibling instead of being overwritten. To build from source instead, follow the instructions below. Successful GitHub Actions runs also provide a `drift-windows-x64` executable artifact.
 
 An active wallpaper continues when the window is closed. Use the Drift tray menu to reopen the window, stop playback, or quit. One controller runs per Windows session; if launching again does not open a window, use its tray menu. Startup, adapter selection, auto-pause, and the video library are saved under `%APPDATA%\MLWStudio`.
 
